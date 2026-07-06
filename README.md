@@ -300,6 +300,20 @@ Full college CRUD interface with search, filters, status controls, and bulk acti
 
 ---
 
+### 11. Admin Enquiries
+Review and manage student enquiries with search, status filters, and action controls.
+
+![Admin Enquiries](docs/screenshots/11-admin-enquiries.png)
+
+---
+
+### 12. Responsive Design
+Mobile-optimized layout with adaptive navigation, search, and content scaling across screen sizes.
+
+![Responsive Design](docs/screenshots/12-responsive-design.png)
+
+---
+
 ## Future Improvements
 
 - Enhanced AI recommendation engine with student preference profiling
