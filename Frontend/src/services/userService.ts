@@ -1,4 +1,5 @@
 import { apiClient } from '../api/client';
+import { env } from '../config/env';
 import type { AuthUser } from '../types/auth';
 import type { CollegeWithSlug } from './collegeService';
 import { mapApiColleges, type ApiCollege } from '../api/mappers/collegeMapper';
@@ -45,7 +46,7 @@ export const userService = {
     formData.append('avatar', file);
 
     const session = JSON.parse(localStorage.getItem('eduvista_auth_session') ?? '{}') as { token?: string };
-    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000/api/v1'}/users/upload-avatar`, {
+    const response = await fetch(`${env.apiBaseUrl}/users/upload-avatar`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${session.token ?? ''}`,
