@@ -29,8 +29,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   useEffect(() => {
-    setAccessTokenGetter(() => token);
-    setAdminTokenGetter(() => token);
+    setAccessTokenGetter(() => token ?? authService.restoreSession()?.token ?? null);
+    setAdminTokenGetter(() => token ?? authService.restoreSession()?.token ?? null);
     setTokenRefreshHandler(() => authService.refreshToken());
     setOnUnauthorized(() => logout());
   }, [token, logout]);
@@ -48,6 +48,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         setUser(session.user);
         setToken(session.token);
+        setAccessTokenGetter(() => session.token);
+        setAdminTokenGetter(() => session.token);
         logAuthDebug('restored session', { userId: session.user.id });
 
         const freshUser = await authService.getCurrentUser();
@@ -63,6 +65,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         if (refreshed) {
           setToken(refreshed);
+          setAccessTokenGetter(() => refreshed);
+          setAdminTokenGetter(() => refreshed);
           const userAfterRefresh = await authService.getCurrentUser();
           if (cancelled) return;
           if (userAfterRefresh) {
@@ -91,6 +95,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const session = await authService.login(credentials);
     setUser(session.user);
     setToken(session.token);
+    setAccessTokenGetter(() => session.token);
+    setAdminTokenGetter(() => session.token);
     return session.user;
   }, []);
 

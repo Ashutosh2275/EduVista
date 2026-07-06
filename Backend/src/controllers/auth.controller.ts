@@ -4,15 +4,28 @@ import { ApiResponse } from '../utils';
 import { HTTP_STATUS, MESSAGES } from '../constants';
 import env from '../config/env';
 
-// Cookie options helper
+// Cookie options helper — cross-origin SPA (Netlify + Render) needs SameSite=None in production
 const getCookieOptions = (rememberMe = false) => {
   const days = rememberMe ? env.JWT_REFRESH_EXPIRE_REMEMBER_DAYS : env.JWT_REFRESH_EXPIRE_DAYS;
+  const isProduction = env.NODE_ENV === 'production';
+
   return {
     httpOnly: true,
-    secure: env.NODE_ENV === 'production',
-    sameSite: 'strict' as const,
+    secure: isProduction,
+    sameSite: (isProduction ? 'none' : 'strict') as 'none' | 'strict',
     maxAge: days * 24 * 60 * 60 * 1000,
     path: '/api/v1/auth', // Scoped only to auth endpoints for security
+  };
+};
+
+const getClearCookieOptions = () => {
+  const isProduction = env.NODE_ENV === 'production';
+
+  return {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: (isProduction ? 'none' : 'strict') as 'none' | 'strict',
+    path: '/api/v1/auth',
   };
 };
 
@@ -109,12 +122,7 @@ export class AuthController {
     }
 
     // Clear refresh token cookie
-    res.clearCookie('refreshToken', {
-      httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'strict' as const,
-      path: '/api/v1/auth',
-    });
+    res.clearCookie('refreshToken', getClearCookieOptions());
 
     return ApiResponse.success(res, null, MESSAGES.LOGOUT_SUCCESS);
   };

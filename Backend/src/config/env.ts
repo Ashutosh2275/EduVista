@@ -85,12 +85,21 @@ const env: EnvConfig = {
   SMTP_FROM_NAME: requireEnv('SMTP_FROM_NAME', 'EduVista'),
   SMTP_FROM_EMAIL: requireEnv('SMTP_FROM_EMAIL', 'noreply@eduvista.com'),
 
-  // CORS
+  // CORS — always include FRONTEND_URL in the allowed origins list
   FRONTEND_URL: requireEnv('FRONTEND_URL', 'http://localhost:5173'),
-  ALLOWED_ORIGINS: (process.env.ALLOWED_ORIGINS || 'http://localhost:5173')
-    .split(',')
-    .map((o) => o.trim())
-    .filter(Boolean),
+  ALLOWED_ORIGINS: (() => {
+    const frontendUrl = requireEnv('FRONTEND_URL', 'http://localhost:5173');
+    const origins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173')
+      .split(',')
+      .map((o) => o.trim())
+      .filter(Boolean);
+
+    if (frontendUrl && !origins.includes(frontendUrl)) {
+      origins.push(frontendUrl);
+    }
+
+    return origins;
+  })(),
 
   // Rate Limiting
   RATE_LIMIT_WINDOW_MS: requireNumber('RATE_LIMIT_WINDOW_MS', 15 * 60 * 1000),
