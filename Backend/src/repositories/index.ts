@@ -1,0 +1,10 @@
+export { UserRepository } from './user.repository';
+export { RefreshTokenRepository } from './refreshToken.repository';
+export { CollegeRepository } from './college.repository';
+export { CourseRepository } from './course.repository';
+export { SearchRepository } from './search.repository';
+export { WishlistRepository } from './wishlist.repository';
+export { CompareRepository } from './compare.repository';
+export { EnquiryRepository } from './enquiry.repository';
+export { AuditLogRepository } from './auditLog.repository';
+export { SystemSettingsRepository } from './systemSettings.repository';

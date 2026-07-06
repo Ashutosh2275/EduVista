@@ -1,0 +1,9 @@
+export { AuthController } from './auth.controller';
+export { UserController } from './user.controller';
+export { CollegeController } from './college.controller';
+export { CourseController } from './course.controller';
+export { SearchController } from './search.controller';
+export { WishlistController } from './wishlist.controller';
+export { CompareController } from './compare.controller';
+export { EnquiryController } from './enquiry.controller';
+export { AdminController } from './admin.controller';

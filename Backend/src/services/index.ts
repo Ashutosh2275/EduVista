@@ -1,0 +1,13 @@
+export { AuthService } from './auth.service';
+export { CloudinaryService } from './cloudinary.service';
+export { UserService } from './user.service';
+export { CollegeService } from './college.service';
+export { CourseService } from './course.service';
+export { SearchService } from './search.service';
+export { WishlistService } from './wishlist.service';
+export { CompareService } from './compare.service';
+export { EnquiryService } from './enquiry.service';
+export { AdminService } from './admin.service';
+export { EmailService } from './email.service';
+export { MemoryCacheService } from './cache.service';
+export { CronService } from './cron.service';
